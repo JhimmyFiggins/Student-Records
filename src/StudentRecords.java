@@ -144,5 +144,6 @@ public class StudentRecords implements ActionListener{
     
 }
 
-// Day 1 -- Defined the Student class and made some StudentRecords(not functional) 54:30;
-// Day 2 -- Added function to ADD and DELETE(simple). 1:20;
+// Day 1 -- Defined the Student class and made some StudentRecords(not functional) 00:54:30
+// Day 2 -- Added function to ADD and DELETE(simple). 1:20:00 
+// Day 3 -- Added function to list and search id. 00:54:00 -- I also created a repository for this project.
