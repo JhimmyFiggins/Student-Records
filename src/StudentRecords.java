@@ -10,6 +10,9 @@
  */
 
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,36 +23,32 @@ import student.model.Student;
 public class StudentRecords implements ActionListener{
     
     private HashMap<String, Student> Cabinet = new HashMap<>();
-    JPanel panel = new JPanel();
-    JFrame frame = new JFrame("Student Records");
+    
+    private JPanel panel = new JPanel();
+    private JFrame frame = new JFrame("Student Records");
+    
     public StudentRecords(){
         
-        registerStudent();
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400,400);
         panel.setSize(400,400);
         
         
-        JButton addButton = new JButton("Add");
-        addButton.addActionListener(new ActionListener(){
+        JButton registerButton = new JButton("register");
+        registerButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
+                registerStudent();
                 
-                Student user1 = Cabinet.get("R012");
-                String ID012 = user1.getStudentID();
-                JOptionPane.showMessageDialog(null,ID012);
-                
-                System.out.println(Cabinet.get("C02"));
-                System.out.println(Cabinet.get("F03"));
-                System.out.println(Cabinet.get("M04"));
             }
         });
         
-        JButton delButton = new JButton("Delete");
-        delButton.addActionListener(new ActionListener(){
+        JButton removeButton = new JButton("Remove");
+        removeButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
-                Cabinet.remove("M04");
+                removeStudent();
 
             }
             
@@ -64,11 +63,9 @@ public class StudentRecords implements ActionListener{
             
         });
         
-        
-        
         panel.add(listButton);
-        panel.add(addButton);
-        panel.add(delButton);
+        panel.add(registerButton);
+        panel.add(removeButton);
         
         frame.add(panel);
         frame.setVisible(true);
@@ -77,24 +74,55 @@ public class StudentRecords implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e){
-        if(e.getActionCommand().equals("addButton")) {
+        if(e.getActionCommand().equals("registerButton")) {
             System.out.println("meowth");
         }
     }
     
     public void registerStudent() {
         
-        Student User1 = new Student("R01", "Reuel", 2);
-        Cabinet.put("R012", User1);
-        Student User2 = new Student("C02", "Crull", 3);
-        Cabinet.put("C02", User2);
-        Student User3 = new Student("F03", "Ferry", 3);
-        Cabinet.put("F03", User3);
-        Student User4 = new Student("M04", "Manuel", 2);
-        Cabinet.put("M04", User4);
+        panel.setSize(700,500);
+        frame.setSize(700,500);
+        panel.removeAll();
+        frame.setTitle("Register Student");
+        panel.setLayout(new GridBagLayout());
+        panel.setBackground(Color.PINK);
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
         
         
+     
         
+        JLabel studentName = new JLabel("Student Name: ");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(studentName, gbc);
+        
+        JTextField nameTF = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        panel.add(nameTF, gbc);
+        
+        JLabel studentID = new JLabel("Student ID: ");
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(studentID, gbc);
+        
+        JTextField idTF = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        panel.add(idTF, gbc);
+        
+        JLabel studentYear = new JLabel("College Year: ");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(studentYear, gbc);
+        
+        JTextField yearTF = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        panel.add(yearTF, gbc);
     }
     
     public void removeStudent() {
@@ -147,3 +175,5 @@ public class StudentRecords implements ActionListener{
 // Day 1 -- Defined the Student class and made some StudentRecords(not functional) 00:54:30
 // Day 2 -- Added function to ADD and DELETE(simple). 1:20:00 
 // Day 3 -- Added function to list and search id. 00:54:00 -- I also created a repository for this project.
+// Day 4 -- Reviewed and made another project with the same function, but it supposed to be IO. 
+//          Added function to OG prjt. in register & remove method. 1:02:00
