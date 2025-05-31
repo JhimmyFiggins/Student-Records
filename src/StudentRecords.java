@@ -10,6 +10,7 @@
  */
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -50,8 +51,15 @@ public class StudentRecords implements ActionListener{
         panel.removeAll();
         panel.setBackground(Color.PINK);
         frame.setSize(400,400);
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets (10, 10, 10, 10);
         
-        JButton registerButton = new JButton("register");
+        JButton registerButton = new JButton("Register");
+        gbc.gridx = 0;
+        gbc.gridy = 0; 
+        panel.add(registerButton, gbc);
+        
         registerButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
@@ -61,6 +69,10 @@ public class StudentRecords implements ActionListener{
         });
         
         JButton removeButton = new JButton("Remove");
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        panel.add(removeButton, gbc); 
+        
         removeButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
@@ -70,6 +82,10 @@ public class StudentRecords implements ActionListener{
             
         });
         JButton listButton = new JButton("List");
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        panel.add(listButton, gbc);
+        listButton.setPreferredSize(new Dimension(75,25));
         listButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
@@ -79,9 +95,6 @@ public class StudentRecords implements ActionListener{
             
         });
         
-        panel.add(listButton);
-        panel.add(registerButton);
-        panel.add(removeButton);
         
         frame.add(panel);
         frame.setVisible(true);
@@ -177,8 +190,42 @@ public class StudentRecords implements ActionListener{
     
     
     public void removeStudent() {
+        panel.removeAll();
+        panel.repaint();
+        panel.setBackground(Color.PINK);
+        frame.setSize(500,500);
+        frame.setTitle("Remove Student");
+        JLabel idLabel = new JLabel("ID: ");
+        
+        JTextField searchTF = new JTextField(10);
         
         
+        JButton scButton = new JButton("Remove");
+        scButton.addActionListener(new ActionListener(){
+            
+            public void actionPerformed(ActionEvent e){
+                
+                Student search = Cabinet.get(searchTF.getText());
+                String ID = search.getStudentID();
+                Cabinet.remove(ID);
+                saveToFile(Cabinet,"Records/Students.txt");
+            }
+        
+        });
+        
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(new ActionListener(){
+            
+            public void actionPerformed(ActionEvent e){
+                mainMenu();
+            }
+        
+        
+        });
+        
+        panel.add(searchTF);
+        panel.add(scButton);
+        panel.add(backButton);
     }
     
     
@@ -188,7 +235,7 @@ public class StudentRecords implements ActionListener{
         
         panel.removeAll();
         frame.setTitle("Student List");
-        frame.setSize(400,400);
+        frame.setSize(500,500);
         panel.repaint();
         panel.setBackground(Color.PINK);
         
@@ -200,7 +247,7 @@ public class StudentRecords implements ActionListener{
         JTextField searchTF = new JTextField(10);
         
         
-        JButton scButton = new JButton();
+        JButton scButton = new JButton("Search");
         scButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
@@ -216,10 +263,19 @@ public class StudentRecords implements ActionListener{
         
         });
         
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(new ActionListener(){
+            
+            public void actionPerformed(ActionEvent e){
+                mainMenu();
+            }
+        
+        
+        
+        });
         panel.add(searchTF);
         panel.add(scButton);
-        frame.add(panel);
-        frame.setVisible(true);
+        panel.add(backButton);
         
         
         
@@ -261,3 +317,4 @@ public class StudentRecords implements ActionListener{
 // Day 4 -- Reviewed and made another project with the same function, but it supposed to be IO. 
 //          Added function to OG prjt. in register & remove method. 1:02:00
 // Day 5 -- Added save and load function, as well as the function of register. 1:12:45
+// Day 6 -- Add remove function and arrange the gbc. 0:40:00
