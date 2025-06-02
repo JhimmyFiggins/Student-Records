@@ -122,39 +122,60 @@ public class StudentRecords implements ActionListener{
         
      
         
-        JLabel studentName = new JLabel("Student Name: ");
+        JLabel firstName = new JLabel("First Name: ");
         gbc.gridx = 0;
         gbc.gridy = 0;
-        panel.add(studentName, gbc);
-        
-        JTextField nameTF = new JTextField(20);
+        panel.add(firstName, gbc);
+
+        JTextField firstTF = new JTextField(20);
         gbc.gridx = 1;
         gbc.gridy = 0;
-        panel.add(nameTF, gbc);
+        panel.add(firstTF, gbc);
+        
+        JLabel middleName = new JLabel("Middle Name: ");
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(middleName, gbc);
+
+        JTextField middleTF = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        panel.add(firstTF, gbc);
+        
+        JLabel lastName = new JLabel("Last Name: ");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(lastName, gbc);
+
+        JTextField lastTF = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        panel.add(lastTF, gbc);
+        
         
         JLabel studentID = new JLabel("Student ID: ");
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 3;
         panel.add(studentID, gbc);
         
         JTextField idTF = new JTextField(20);
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 3;
         panel.add(idTF, gbc);
         
         JLabel studentYear = new JLabel("College Year: ");
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         panel.add(studentYear, gbc);
         
         JTextField yearTF = new JTextField(20);
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         panel.add(yearTF, gbc);
         
         JButton confirmButton = new JButton("Confirm");
-        gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridx = 0;
+        gbc.gridy = 5;
         panel.add(confirmButton, gbc);
         confirmButton.addActionListener(new ActionListener(){
         
@@ -176,7 +197,7 @@ public class StudentRecords implements ActionListener{
         
         JButton backButton = new JButton("Back");
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         panel.add(backButton, gbc);
         backButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
