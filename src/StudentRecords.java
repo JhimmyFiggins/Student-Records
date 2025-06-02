@@ -183,12 +183,22 @@ public class StudentRecords implements ActionListener{
                 String name = nameTF.getText();
                 String id = idTF.getText();
                 int year = Integer.valueOf(yearTF.getText());
+
+                boolean decider = doesIDEx(id);
+
+                if(!decider){
+                    
+                    Student addStudent = new Student(id, name, year);
+                    Cabinet.put(id, addStudent);
+                    JOptionPane.showMessageDialog(null, "Welcome");
+                    mainMenu();
+                    saveToFile(Cabinet,"Records/Students.txt");    
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null,"ID already existed. Please use different ID");
+                }
                 
-                Student addStudent = new Student(id, name, year);
-                Cabinet.put(id, addStudent);
-                JOptionPane.showMessageDialog(null, "Welcome");
-                mainMenu();
-                saveToFile(Cabinet,"Records/Students.txt");
+                
             }
         
         
@@ -340,4 +350,4 @@ public class StudentRecords implements ActionListener{
 // Day 5 -- Added save and load function, as well as the function of register. 1:12:45
 // Day 6 -- Add remove function and arrange the gbc. 0:40:00
 // Day 7 -- Reviewed the code and made a list to study for later. 00:10:00
-// Day 8 -- ?
+// Day 8 -- Added ID checker to the register student. I'm planning to do automatic id maker in the future. 0:16:00 -- 6/2
