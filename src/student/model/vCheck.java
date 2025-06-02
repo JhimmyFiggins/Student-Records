@@ -8,6 +8,20 @@ package student.model;
  *
  * @author iya
  */
+import src.StudentRecords;
+
 public class vCheck {
-    
+
+    public boolean doesIDEx(String ID){
+        
+        boolean decider = false;
+        
+        try{
+          Student checker = Cabinet.get(ID);
+        }catch(Exception e){
+            decider = true;
+        }
+        
+        return decider;
+    }
 }
