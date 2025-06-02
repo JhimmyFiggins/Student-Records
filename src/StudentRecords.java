@@ -318,3 +318,5 @@ public class StudentRecords implements ActionListener{
 //          Added function to OG prjt. in register & remove method. 1:02:00
 // Day 5 -- Added save and load function, as well as the function of register. 1:12:45
 // Day 6 -- Add remove function and arrange the gbc. 0:40:00
+// Day 7 -- Reviewed the code and made a list to study for later. 00:10:00
+// Day 8 -- ?
