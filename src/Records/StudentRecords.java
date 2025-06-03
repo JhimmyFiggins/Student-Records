@@ -1,3 +1,5 @@
+package Records;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,16 +20,18 @@ import java.awt.Insets;
 import java.io.*;
 import java.util.HashMap;
 import javax.swing.*;
-import student.model.Student;
+
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.ClassNotFoundException;
 
+import model.Student;
+import static model.Checker.doesIDEx;
 
 public class StudentRecords implements ActionListener{
     
-    private HashMap<String, Student> Cabinet = new HashMap<>();
+    public static HashMap<String, Student> Cabinet = new HashMap<>();
     
     private JPanel panel = new JPanel();
     private JFrame frame = new JFrame("Student Records");
@@ -95,7 +99,7 @@ public class StudentRecords implements ActionListener{
             
         });
         
-        
+        frame.setTitle("Student Records");
         frame.add(panel);
         frame.setVisible(true);
     }
@@ -115,7 +119,7 @@ public class StudentRecords implements ActionListener{
         frame.setTitle("Register Student");
         panel.setLayout(new GridBagLayout());
         panel.setBackground(Color.PINK);
-        
+        panel.repaint();
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         
@@ -140,7 +144,7 @@ public class StudentRecords implements ActionListener{
         JTextField middleTF = new JTextField(20);
         gbc.gridx = 1;
         gbc.gridy = 1;
-        panel.add(firstTF, gbc);
+        panel.add(middleTF, gbc);
         
         JLabel lastName = new JLabel("Last Name: ");
         gbc.gridx = 0;
@@ -177,25 +181,30 @@ public class StudentRecords implements ActionListener{
         gbc.gridx = 0;
         gbc.gridy = 5;
         panel.add(confirmButton, gbc);
+        
         confirmButton.addActionListener(new ActionListener(){
         
             public void actionPerformed(ActionEvent e){
-                String name = nameTF.getText();
+                String firstName = firstTF.getText();
+                String middleName = middleTF.getText();
+                String lastName = lastTF.getText();
                 String id = idTF.getText();
                 int year = Integer.valueOf(yearTF.getText());
 
                 boolean decider = doesIDEx(id);
-
+                
                 if(!decider){
                     
-                    Student addStudent = new Student(id, name, year);
+                    Student addStudent = new Student(id, firstName, middleName, lastName, year);
                     Cabinet.put(id, addStudent);
                     JOptionPane.showMessageDialog(null, "Welcome");
                     mainMenu();
-                    saveToFile(Cabinet,"Records/Students.txt");    
+                    saveToFile(Cabinet,"Records/Students.txt");
+                        
                     
                 }else{
                     JOptionPane.showMessageDialog(null,"ID already existed. Please use different ID");
+                    
                 }
                 
                 
@@ -209,9 +218,11 @@ public class StudentRecords implements ActionListener{
         gbc.gridx = 1;
         gbc.gridy = 5;
         panel.add(backButton, gbc);
+        
         backButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 mainMenu();
+                
             }
         
         
@@ -298,7 +309,9 @@ public class StudentRecords implements ActionListener{
         backButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
+                
                 mainMenu();
+                
             }
         
         
@@ -336,6 +349,7 @@ public class StudentRecords implements ActionListener{
         }
         
     }
+
     
 
     
@@ -351,3 +365,4 @@ public class StudentRecords implements ActionListener{
 // Day 6 -- Add remove function and arrange the gbc. 0:40:00
 // Day 7 -- Reviewed the code and made a list to study for later. 00:10:00
 // Day 8 -- Added ID checker to the register student. I'm planning to do automatic id maker in the future. 0:16:00 -- 6/2
+// Day 9 -- Fixed the static of the cabinet and the register student. Cram the goal of Day 9 and 10 tomorrow. 1:00:00 -- 6/3 - Finished on 6/4 2AM
