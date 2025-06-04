@@ -9,11 +9,13 @@ package Records;
  *
  * @author iya
  */
+import Records.StudentRecords;
+
 public class Main {
     
     public static void main(String[] args) {
         
         StudentRecords game = new StudentRecords();
-
+        System.out.println(StudentRecords.Cabinet);
     }
 }

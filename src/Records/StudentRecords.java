@@ -25,6 +25,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.ClassNotFoundException;
+import java.util.ArrayList;
+import java.util.Map;
+import static java.util.Map.entry;
 
 import model.Student;
 import static model.Checker.doesIDEx;
@@ -322,6 +325,22 @@ public class StudentRecords implements ActionListener{
         panel.add(backButton);
         
         
+        JPanel tablePanel = new JPanel();
+        JTable listTable = new JTable();
+        String[] columnNames = {"ID", "Student Name", "Year Level"};
+        Object[][] rowData = new Object[Cabinet.size()][3];
+        
+        ArrayList<String> IDCabinet = new ArrayList<String>();
+        
+        for (Map.Entry<String, Student> entry : Cabinet.entrySet()){
+            String keyID = entry.getKey();         // Getting the key
+            IDCabinet.add(keyID);
+        }
+        for (int i = 0; i<Cabinet.size(); i++){
+            
+            
+        
+        }
         
     }
     
@@ -366,3 +385,5 @@ public class StudentRecords implements ActionListener{
 // Day 7 -- Reviewed the code and made a list to study for later. 00:10:00
 // Day 8 -- Added ID checker to the register student. I'm planning to do automatic id maker in the future. 0:16:00 -- 6/2
 // Day 9 -- Fixed the static of the cabinet and the register student. Cram the goal of Day 9 and 10 tomorrow. 1:00:00 -- 6/3 - Finished on 6/4 2AM
+// Day 10 -- Started of coding list of students using Map entry and getting their specific key -- 0:48:00
+//           Continue this tomorrow
