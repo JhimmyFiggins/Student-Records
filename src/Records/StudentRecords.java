@@ -357,11 +357,13 @@ public class StudentRecords implements ActionListener{
         
         listTable = new JTable(rowData, columnNames);
         JScrollPane scrollPane = new JScrollPane(listTable);
-        
         gbc.gridx = 0;
         gbc.gridy = 2;    
-        panel.add(listTable, gbc);
+        panel.add(scrollPane, gbc);
         
+        scrollPane.setPreferredSize(new Dimension (200,200));
+        
+
         }
 
     
