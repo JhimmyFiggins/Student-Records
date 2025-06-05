@@ -240,6 +240,11 @@ public class StudentRecords implements ActionListener{
         panel.setBackground(Color.PINK);
         frame.setSize(500,500);
         frame.setTitle("Remove Student");
+        
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets (10,10,10,10);
+        
         JLabel idLabel = new JLabel("ID: ");
         
         JTextField searchTF = new JTextField(10);
@@ -268,9 +273,7 @@ public class StudentRecords implements ActionListener{
         
         });
         
-        panel.add(searchTF);
-        panel.add(scButton);
-        panel.add(backButton);
+        
     }
     
     
@@ -284,15 +287,24 @@ public class StudentRecords implements ActionListener{
         panel.repaint();
         panel.setBackground(Color.PINK);
         
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets (10,10,10,10);
         
         
         JPanel listPanel = new JPanel();
         
         
-        JTextField searchTF = new JTextField(10);
-        
+        JTextField searchTF = new JTextField(20);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(searchTF, gbc);
         
         JButton scButton = new JButton("Search");
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        panel.add(scButton, gbc);
+        
         scButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
@@ -309,6 +321,9 @@ public class StudentRecords implements ActionListener{
         });
         
         JButton backButton = new JButton("Back");
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        panel.add(backButton, gbc);
         backButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
@@ -320,14 +335,9 @@ public class StudentRecords implements ActionListener{
         
         
         });
-        panel.add(searchTF);
-        panel.add(scButton);
-        panel.add(backButton);
-        
-        
-        JPanel tablePanel = new JPanel();
+
         JTable listTable = new JTable();
-        String[] columnNames = {"ID", "Student Name", "Year Level"};
+        String[] columnNames = {"Student ID", "Student Name", "Year Level"};
         Object[][] rowData = new Object[Cabinet.size()][3];
         
         ArrayList<String> IDCabinet = new ArrayList<String>();
@@ -338,11 +348,22 @@ public class StudentRecords implements ActionListener{
         }
         for (int i = 0; i<Cabinet.size(); i++){
             
+            Student row = Cabinet.get(IDCabinet.get(i));
+            rowData[i][0] = row.getStudentID();
+            rowData[i][1] = row.getStudentName();
+            rowData[i][2] = row.getYear();
             
-        
         }
         
-    }
+        listTable = new JTable(rowData, columnNames);
+        JScrollPane scrollPane = new JScrollPane(listTable);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 2;    
+        panel.add(listTable, gbc);
+        
+        }
+
     
     public void saveToFile(HashMap<String, Student> cabinet, String filename){
         
@@ -386,4 +407,4 @@ public class StudentRecords implements ActionListener{
 // Day 8 -- Added ID checker to the register student. I'm planning to do automatic id maker in the future. 0:16:00 -- 6/2
 // Day 9 -- Fixed the static of the cabinet and the register student. Cram the goal of Day 9 and 10 tomorrow. 1:00:00 -- 6/3 - Finished on 6/4 2AM
 // Day 10 -- Started of coding list of students using Map entry and getting their specific key -- 0:48:00
-//           Continue this tomorrow
+//           Continue this tomorrow | Continuation -- 0:35:26.
