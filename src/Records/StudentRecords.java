@@ -32,7 +32,7 @@ import static java.util.Map.entry;
 import model.Student;
 import static model.Checker.doesIDEx;
 
-public class StudentRecords implements ActionListener{
+public class StudentRecords{
     
     public static HashMap<String, Student> Cabinet = new HashMap<>();
     
@@ -44,6 +44,7 @@ public class StudentRecords implements ActionListener{
     
     public StudentRecords(){
         
+        tempt();
         Cabinet = loadFromFile("Records/Students.txt");
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,12 +109,7 @@ public class StudentRecords implements ActionListener{
     }
     
     
-    @Override
-    public void actionPerformed(ActionEvent e){
-        if(e.getActionCommand().equals("registerButton")) {
-            System.out.println("meowth");
-        }
-    }
+    
     
     public void registerStudent() {
         
@@ -200,6 +196,7 @@ public class StudentRecords implements ActionListener{
                     
                     Student addStudent = new Student(id, firstName, middleName, lastName, year);
                     Cabinet.put(id, addStudent);
+                    
                     JOptionPane.showMessageDialog(null, "Welcome");
                     mainMenu();
                     saveToFile(Cabinet,"Records/Students.txt");
@@ -387,12 +384,19 @@ public class StudentRecords implements ActionListener{
         }catch(IOException | ClassNotFoundException e){
             
             e.printStackTrace();
-            return new HashMap<>();
+            return new HashMap<String, Student>();
         }
         
     }
 
-    
+    public void tempt(){
+        Student tempt = new Student("0", "0", "0", "0", 0);
+        Cabinet.put("0", tempt);
+        //saveToFile(Cabinet,"Records/Students.txt");
+        Cabinet = loadFromFile("Records/Students.txt");
+        Cabinet.remove("0");
+        saveToFile(Cabinet,"Records/Students.txt");
+    }
 
     
     
