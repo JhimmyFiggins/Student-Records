@@ -19,10 +19,10 @@ public class Checker {
         try{
           
           Student checker = StudentRecords.Cabinet.get(ID);
-          int year = checker.getYear();//for nullpointexception
+          String year = checker.getYear();//for nullpointexception
           
         }catch(NullPointerException e){
-            decider = false; System.out.println(decider+"Decider");
+            decider = false;
         }
         
         return decider;
@@ -32,10 +32,18 @@ public class Checker {
         
         StudentRecords records = new StudentRecords();
         Student name = records.Cabinet.get(ID);
-        String fullname = name.getStudentName();
+        String fullname = name.getStudentFull();
         
         return fullname;
     }
 
-
+    public static boolean empty (String check){
+        
+        int length = check.length();
+        if(length == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

@@ -24,13 +24,13 @@ import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.ClassNotFoundException;
+import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.Map;
 import static java.util.Map.entry;
 
 import model.Student;
-import static model.Checker.doesIDEx;
+import static model.Checker.*;
 
 public class StudentRecords{
     
@@ -44,7 +44,7 @@ public class StudentRecords{
     
     public StudentRecords(){
         
-        tempt();
+        
         Cabinet = loadFromFile("Records/Students.txt");
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -171,10 +171,13 @@ public class StudentRecords{
         gbc.gridy = 4;
         panel.add(studentYear, gbc);
         
-        JTextField yearTF = new JTextField(20);
+        JComboBox yearCB = new JComboBox();
         gbc.gridx = 1;
         gbc.gridy = 4;
-        panel.add(yearTF, gbc);
+        panel.add(yearCB, gbc);
+        yearCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"1st Year", "2nd Year", "3rd Year"
+                        , "4th Year" }));
+        
         
         JButton confirmButton = new JButton("Confirm");
         gbc.gridx = 0;
@@ -188,9 +191,13 @@ public class StudentRecords{
                 String middleName = middleTF.getText();
                 String lastName = lastTF.getText();
                 String id = idTF.getText();
-                int year = Integer.valueOf(yearTF.getText());
+                String year = String.valueOf(yearCB.getSelectedItem());
 
-                boolean decider = doesIDEx(id);
+                if(empty(firstName) || empty(middleName) || empty(lastName)){
+                    JOptionPane.showMessageDialog(null, "Please fill any blanks");
+                }else{
+                    
+                    boolean decider = doesIDEx(id);
                 
                 if(!decider){
                     
@@ -206,6 +213,8 @@ public class StudentRecords{
                     JOptionPane.showMessageDialog(null,"ID already existed. Please use different ID");
                     
                 }
+                }
+                
                 
                 
             }
@@ -243,24 +252,73 @@ public class StudentRecords{
         gbc.insets = new Insets (10,10,10,10);
         
         JLabel idLabel = new JLabel("ID: ");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(idLabel, gbc);
         
         JTextField searchTF = new JTextField(10);
-        
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        panel.add(searchTF, gbc);
         
         JButton scButton = new JButton("Remove");
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        panel.add(scButton, gbc);
+        
         scButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
                 
+                boolean  decider = doesIDEx(searchTF.getText());
+                
                 Student search = Cabinet.get(searchTF.getText());
-                String ID = search.getStudentID();
-                Cabinet.remove(ID);
-                saveToFile(Cabinet,"Records/Students.txt");
+                
+                if(decider){
+                
+                }else{
+                    
+                }
+                
+                
+                
+                try{
+                    String[] Options = {"Remove", "Back"};
+                    String ID = search.getStudentID();
+                    int removeDialog = JOptionPane.showOptionDialog(
+                        null, 
+                        "Would you like to remove this student:" +
+                        search.getStudentFull() + " " + search.getStudentID(),
+                        "Remove", JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null,
+                        Options, null);
+                
+                if(removeDialog == 0){
+                    
+                    JOptionPane.showMessageDialog(null, "Student is removed");
+                    Cabinet.remove(ID);
+                    saveToFile(Cabinet,"Records/Students.txt");
+                    mainMenu();
+                    
+                }else if(removeDialog == 1){
+                    
+                }else{
+                
+                }
+                    
+                    
+                }catch(NullPointerException a){
+                    JOptionPane.showMessageDialog(null,"Please fill the search bar");
+                }
+                
             }
         
         });
         
         JButton backButton = new JButton("Back");
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        panel.add(backButton, gbc);
         backButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
@@ -307,12 +365,17 @@ public class StudentRecords{
             public void actionPerformed(ActionEvent e){
                 
                 Student search = Cabinet.get(searchTF.getText());
+                try{
                 String ID = search.getStudentID();
-                String name = search.getStudentName();
-                int year = search.getYear();
+                String name = search.getStudentFull();
+                String year = search.getYear();
                 String StudentInfo = "ID: " + ID + "\nName: " + name + "\nCollege Year: " + year;
                 JOptionPane.showMessageDialog(null, StudentInfo);
-            
+                
+                }catch(NullPointerException a){
+                
+                    JOptionPane.showMessageDialog(null, "Please fill the ID");
+                }
             }
         
         });
@@ -347,7 +410,7 @@ public class StudentRecords{
             
             Student row = Cabinet.get(IDCabinet.get(i));
             rowData[i][0] = row.getStudentID();
-            rowData[i][1] = row.getStudentName();
+            rowData[i][1] = row.getStudentFull();
             rowData[i][2] = row.getYear();
             
         }
@@ -384,19 +447,11 @@ public class StudentRecords{
         }catch(IOException | ClassNotFoundException e){
             
             e.printStackTrace();
-            return new HashMap<String, Student>();
+            return new HashMap<>();
         }
         
     }
 
-    public void tempt(){
-        Student tempt = new Student("0", "0", "0", "0", 0);
-        Cabinet.put("0", tempt);
-        //saveToFile(Cabinet,"Records/Students.txt");
-        Cabinet = loadFromFile("Records/Students.txt");
-        Cabinet.remove("0");
-        saveToFile(Cabinet,"Records/Students.txt");
-    }
 
     
     
@@ -414,3 +469,6 @@ public class StudentRecords{
 // Day 9 -- Fixed the static of the cabinet and the register student. Cram the goal of Day 9 and 10 tomorrow. 1:00:00 -- 6/3 - Finished on 6/4 2AM
 // Day 10 -- Started of coding list of students using Map entry and getting their specific key -- 0:48:00
 //           Continue this tomorrow | Continuation -- 0:35:26.
+// Day 11 -- Day 11 is a disaster 2 hours maybe.
+// Day 12 -- blank textfield errors when  search, remove, and 
+//           register(no nullpointerexception)are clicked were fixed 1:00:26.

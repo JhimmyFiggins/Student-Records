@@ -18,11 +18,11 @@ public class Student implements Serializable{
     private String StudentFirst;
     private String StudentMiddle;
     private String StudentLast;
-    private String StudentFull = StudentFirst+ " " + StudentMiddle + " " + StudentLast;
-    private int CollegeYear;
+    private String StudentFull;
+    private String CollegeYear;
         
     
-    public Student(String id, String firstName, String middleName, String lastName, int year) {
+    public Student(String id, String firstName, String middleName, String lastName, String year) {
         
         this.ID = id;
         this.StudentFirst = firstName;
@@ -37,12 +37,24 @@ public class Student implements Serializable{
         return ID;
     }
     
-    public String getStudentName(){
-        
-        return StudentFull;
+    public String getStudentFirst(){
+        return StudentFirst;
     }
     
-    public int getYear(){
+    public String getStudentMiddle(){
+        return StudentMiddle;
+    }
+    
+    public String getStudentLast(){
+        return StudentLast;
+    }
+    
+    public String getStudentFull(){
+        
+        return StudentFull = getStudentFirst() + " " + getStudentMiddle() + " " + getStudentLast();
+    }
+    
+    public String getYear(){
         return CollegeYear;
     }
     
@@ -58,11 +70,9 @@ public class Student implements Serializable{
         this.StudentFirst = name;
     }
     
-    public void setStudentLast(String name){
-        this.StudentFirst = name;
-    }
     
-    public void setYear(int year){
+    
+    public void setYear(String year){
         this.CollegeYear = year;
     }
     
@@ -72,19 +82,6 @@ public class Student implements Serializable{
     }
     
     
-    public static boolean doesIDEx(String ID){
-        StudentRecords records = new StudentRecords();
-        boolean decider = false;
-        
-        try{
-          
-          Student checker = records.Cabinet.get(ID);
-          
-        }catch(Exception e){
-            decider = true;
-        }
-        
-        return decider;
-    }
+    
 }
 
