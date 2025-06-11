@@ -32,7 +32,7 @@ public class Checker {
         
         StudentRecords records = new StudentRecords();
         Student name = records.Cabinet.get(ID);
-        String fullname = name.getStudentFull();
+        String fullname = name.getStudentName();
         
         return fullname;
     }

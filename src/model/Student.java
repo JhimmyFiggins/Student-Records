@@ -49,7 +49,7 @@ public class Student implements Serializable{
         return StudentLast;
     }
     
-    public String getStudentFull(){
+    public String getStudentName(){
         
         return StudentFull = getStudentFirst() + " " + getStudentMiddle() + " " + getStudentLast();
     }
