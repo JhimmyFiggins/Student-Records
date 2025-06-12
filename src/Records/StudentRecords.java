@@ -690,4 +690,6 @@ public class StudentRecords{
 // Day 13 -- Improve gui.
 // Day 14 -- Added list of grades with add and remove function 02:16:42.
 // Day 15 -- Finished the Flowchart and will grade everything later.
-// 
+// Day 16 -- Export Student Records as jar to be standalone program.
+// Day 17 -- Did the program without gui 1:30:00
+// Day 18 -- later
