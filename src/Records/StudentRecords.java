@@ -24,10 +24,10 @@ import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.Map;
-import static java.util.Map.entry;
+
+
 
 import model.Student;
 import model.Subject;
@@ -49,7 +49,7 @@ public class StudentRecords{
         
         
         Cabinet = loadFromFile("Records/Students.txt");
-        Subjects = loadSubjects("Records/StudentSubjects.ser");
+        Subjects = loadSubjects("Records/Subjects.txt");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400,400);
         panel.setSize(400,400);
@@ -60,6 +60,8 @@ public class StudentRecords{
     public void mainMenu(){
         
         panel.removeAll();
+        panel.revalidate();  
+        panel.repaint();  
         panel.setBackground(Color.PINK);
         frame.setSize(400,400);
         panel.setLayout(new GridBagLayout());
@@ -100,7 +102,7 @@ public class StudentRecords{
         listButton.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e){
-                listStudent();
+                listOfStudent();
 
             }
             
@@ -131,10 +133,12 @@ public class StudentRecords{
         
         frame.setSize(700,500);
         panel.removeAll();
+        panel.revalidate();  
+        panel.repaint();  
         frame.setTitle("Register Student");
         panel.setLayout(new GridBagLayout());
         panel.setBackground(Color.PINK);
-        panel.repaint();
+     
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         
@@ -215,20 +219,20 @@ public class StudentRecords{
                     
                     boolean decider = doesIDEx(id);
                 
-                if(!decider){
-                    
-                    Student addStudent = new Student(id, firstName, middleName, lastName, year);
-                    Cabinet.put(id, addStudent);
-                    
-                    JOptionPane.showMessageDialog(null, "Welcome");
-                    mainMenu();
-                    saveToFile(Cabinet,"Records/Students.txt");
-                        
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null,"ID already existed. Please use different ID");
-                    
-                }
+                    if(!decider){
+
+                        Student addStudent = new Student(id, firstName, middleName, lastName, year);
+                        Cabinet.put(id, addStudent);
+
+                        JOptionPane.showMessageDialog(null, "Welcome");
+                        mainMenu();
+                        saveToFile(Cabinet,"Records/Students.txt");
+
+
+                    }else{
+                        JOptionPane.showMessageDialog(null,"ID already existed. Please use different ID");
+
+                    }
                 }
                 
                 
@@ -258,7 +262,8 @@ public class StudentRecords{
     
     public void removeStudent() {
         panel.removeAll();
-        panel.repaint();
+        panel.revalidate();  
+        panel.repaint();  
         panel.setBackground(Color.PINK);
         frame.setSize(500,500);
         frame.setTitle("Remove Student");
@@ -350,12 +355,14 @@ public class StudentRecords{
     
     
     
-    public void listStudent() {
+    public void listOfStudent() {
         
         panel.removeAll();
+        panel.revalidate();  
+        panel.repaint();  
         frame.setTitle("Student List");
         frame.setSize(700,500);
-        panel.repaint();
+        
         panel.setBackground(Color.PINK);
         
         panel.setLayout(new GridBagLayout());
@@ -446,9 +453,12 @@ public class StudentRecords{
     public void Grades(){
         
         panel.removeAll();
-        frame.setSize(700,500);
-        panel.repaint();
+        panel.revalidate();  
+        panel.repaint();  
+        frame.setSize(800,500);
         
+        panel.setBackground(Color.PINK);
+                
         frame.setTitle("Grades");
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -516,39 +526,51 @@ public class StudentRecords{
         scButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 
-                Student subject = Cabinet.get(searchTF.getText());
-                Student.setText(subject.getStudentName());
-                JButton addButton = new JButton("Add Subject");
-                addButton.addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent e){
-                        addSubject(searchTF.getText());
-                    }
-                });
-                gbc.gridx = 2;
-                gbc.gridy = 1;
-                panel.add(addButton, gbc);
-                
-                JButton removeButton = new JButton("Remove Subject");
-                removeButton.addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent e){
-                        removeSubject(searchTF.getText());
-                    }
-                });
-                gbc.gridx = 3;
-                gbc.gridy = 1;
-                panel.add(removeButton, gbc);
-                
-                for(Map.Entry<String, Subject> entry : Subjects.entrySet()){
+                if(empty(searchTF.getText())){
+                    JOptionPane.showMessageDialog(null, "Please fill the blank");
+                }else{
                     
-                    String ID = entry.getKey();
-                    IDsubjects.add(ID);
+                    if(doesIDEx(searchTF.getText())){
+                        
+                        Student subject = Cabinet.get(searchTF.getText());
+                        Student.setText(subject.getStudentName());
+                        JButton addButton = new JButton("Add Subject");
+                        addButton.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent e){
+                                addSubject(searchTF.getText());
+                            }
+                        });
+                        gbc.gridx = 2;
+                        gbc.gridy = 1;
+                        panel.add(addButton, gbc);
+
+                        JButton removeButton = new JButton("Remove Subject");
+                        removeButton.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent e){
+                                removeSubject(searchTF.getText());
+                            }
+                        });
+                        gbc.gridx = 3;
+                        gbc.gridy = 1;
+                        panel.add(removeButton, gbc);
+
+                        for(Map.Entry<String, Subject> entry : Subjects.entrySet()){
+
+                            String ID = entry.getKey();
+                            IDsubjects.add(ID);
+
+                        }
+                        for(int i = 0; i<Subjects.size(); i++){
+                            Subject temp = Subjects.get(IDsubjects.get(i));
+                            rowData[i][0] = temp.getSubject();
+                            rowData[i][1] = temp.getGrade();
+                        }
+                    }else{
+                       JOptionPane.showMessageDialog(null, "ID doesn't exist");
+                    }
+                }
                 
-                }
-                for(int i = 0; i<Subjects.size(); i++){
-                    Subject temp = Subjects.get(IDsubjects.get(i));
-                    rowData[i][0] = temp.getSubject();
-                    rowData[i][1] = temp.getGrade();
-                }
+                
             }
         });
         
@@ -578,8 +600,11 @@ public class StudentRecords{
             public void actionPerformed(ActionEvent e){
                 Subject subject = new Subject(String.valueOf(subCB.getSelectedItem()),0);
                 Subjects.put(ID+subCB.getSelectedItem(), subject);
-                saveSubjects(Subjects,"Records/StudentSubjects.ser");
-                
+                saveSubjects(Subjects,"Records/Subjects.txt");
+                frame.setVisible(false);
+                panel.removeAll();
+                frame.setSize(75,500);
+                Grades();
             }
         });
         
@@ -608,8 +633,10 @@ public class StudentRecords{
             public void actionPerformed(ActionEvent e){
                 Subject subject = new Subject(String.valueOf(subCB.getSelectedItem()),0);
                 Subjects.remove(ID+subCB.getSelectedItem());
-                saveSubjects(Subjects,"Records/StudentSubjects.ser");
-                
+                saveSubjects(Subjects,"Records/Subjects.txt");
+                frame.setVisible(false);
+                panel.removeAll();
+                Grades();
             }
         });
         

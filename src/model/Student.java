@@ -15,20 +15,20 @@ import java.io.*;
 public class Student implements Serializable{
 
     private String ID;
-    private String StudentFirst;
-    private String StudentMiddle;
-    private String StudentLast;
-    private String StudentFull;
-    private String CollegeYear;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private String fullName;
+    private String yearLevel;
         
     
     public Student(String id, String firstName, String middleName, String lastName, String year) {
         
         this.ID = id;
-        this.StudentFirst = firstName;
-        this.StudentMiddle = middleName;
-        this.StudentLast = lastName;
-        this.CollegeYear = year;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.yearLevel = year;
 
     }
     
@@ -37,48 +37,51 @@ public class Student implements Serializable{
         return ID;
     }
     
-    public String getStudentFirst(){
-        return StudentFirst;
+    public String getFirstName(){
+        return firstName;
     }
     
-    public String getStudentMiddle(){
-        return StudentMiddle;
+    public String getMiddleName(){
+        return middleName;
     }
     
-    public String getStudentLast(){
-        return StudentLast;
+    public String getLastName(){
+        return lastName;
     }
     
     public String getStudentName(){
         
-        return StudentFull = getStudentFirst() + " " + getStudentMiddle() + " " + getStudentLast();
+        return fullName = getFirstName() + " " + getMiddleName() + " " + getLastName();
     }
     
     public String getYear(){
-        return CollegeYear;
+        return yearLevel;
     }
     
     public void setStudentID(String id){
         this.ID = id;
     }
     
-    public void setStudentFirst(String name){
-        this.StudentFirst = name;
+    public void setFirstName(String name){
+        this.firstName = name;
     }
     
-    public void setStudentMiddle(String name){
-        this.StudentFirst = name;
+    public void setMiddleName(String name){
+        this.middleName = name;
     }
     
+    public void setLastName(String name){
+        this.lastName = name;
+    }
     
     
     public void setYear(String year){
-        this.CollegeYear = year;
+        this.yearLevel = year;
     }
     
     @Override
     public String toString() {
-        return "ID: " + ID + ", Name: " +StudentFull + ", Grade: " + CollegeYear;
+        return "ID: " + ID + ", Name: " +fullName + ", Grade: " + yearLevel;
     }
     
     
